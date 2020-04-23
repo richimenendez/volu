@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export default function ListaEspera() {
   const [pacientes = [], setPacientes] = useState();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     axios
@@ -55,8 +61,9 @@ export default function ListaEspera() {
   const lista = pacientes.map((element) => {
     if (element.paciente.estadoHospital === "Cola") {
       return (
-        <div className="col-md-3 card datos">
+        <div className="col-md-3 card datos" >
           <h3
+           /*onClick={handleShow}*/
             className={`card-header  ${getColor(
               element.paciente.riesgo
             )} ${getColorT(element.paciente.riesgo)}`}
@@ -64,7 +71,36 @@ export default function ListaEspera() {
             {" "}
             {element.paciente.nombre}
           </h3>
-          <p className="card-body"> {element.paciente.residencia}</p>
+
+          
+          <div className="row">
+          <h5 class="col-lg-6"> Sexo </h5 >    
+          <p class="col-lg-6"  > {element.paciente.sexo}</p>
+          </div>
+          
+          <div className="row">
+          <h5 class="col-lg-6"> Registro </h5 >    
+          <p class="col-lg-6"  > {element.paciente.registro}</p>
+          </div>
+
+          <div className="row">
+          <h5 class="col-lg-6"> Telefono </h5 >    
+          <p class="col-lg-6"  > {element.paciente.telefono}</p>
+          </div>
+
+          <div className="row">
+          <h5 class="col-lg-6"> sintomas </h5 >    
+          <p class="col-lg-6"  > {element.paciente.sintomas}</p>
+          </div>
+
+          <div className="row">
+          <h5 class="col-lg-6"> riesgo </h5 >    
+          <p class="col-lg-6"  > {element.paciente.riesgo}</p>
+          </div>
+
+
+            
+
           <div className="row">
             <div className="col-lg-6">
               <a
@@ -88,6 +124,9 @@ export default function ListaEspera() {
             </div>
           </div>
         </div>
+
+        
+
       );
     }
   });
@@ -99,6 +138,7 @@ export default function ListaEspera() {
         Cola de Izquierda a Derecha!
       </h2>
       {lista}
+
     </div>
   );
 }
